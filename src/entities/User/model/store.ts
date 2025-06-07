@@ -20,7 +20,7 @@ export const useUserStore = create<State>((set) => ({
     try {
       const res = await $api.get<IUser[]>("/users");
       set({ users: res.data, isLoading: false });
-    } catch (error) {
+    } catch (err) {
       set({ error: "Ошибка загрузки пользователей", isLoading: false });
     }
   },

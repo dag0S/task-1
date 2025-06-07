@@ -1,5 +1,4 @@
 import { useEffect, useState, type ChangeEvent, type FC } from "react";
-import { Alert, Spin } from "antd";
 
 import { UserList, useUserStore } from "@/entities/User";
 import { ViewSelector } from "@/features/ViewSelector";
@@ -24,9 +23,6 @@ export const UsersPage: FC = () => {
     fetchUsers();
   }, [fetchUsers]);
 
-  if (isLoading) return <Spin tip="Загрузка пользователей..." />;
-  if (error) return <Alert type="error" message={error} />;
-
   return (
     <div>
       <SearchInput
@@ -35,7 +31,11 @@ export const UsersPage: FC = () => {
         placeholder="Поиск по имени"
       />
       <ViewSelector />
-      <UserList filteredUsers={filteredUsers} />
+      <UserList
+        filteredUsers={filteredUsers}
+        error={error}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

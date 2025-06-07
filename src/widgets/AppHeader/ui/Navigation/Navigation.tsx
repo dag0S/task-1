@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { href, Link, useLocation } from "react-router-dom";
-import { Menu } from "antd";
+import { Menu, type MenuProps } from "antd";
 import {
   HomeOutlined,
   PictureOutlined,
@@ -12,25 +12,27 @@ import { ROUTES } from "@/shared/model/routes";
 
 const { Item } = Menu;
 
-const menuItems = [
+type MenuItem = Required<MenuProps>["items"][number];
+
+const menuItems: MenuItem[] = [
   {
-    label: "Главная",
-    link: ROUTES.HOME,
+    label: <Link to={href(ROUTES.HOME)}>Главная</Link>,
+    key: ROUTES.HOME,
     icon: <HomeOutlined />,
   },
   {
-    label: "Посты",
-    link: ROUTES.POSTS,
+    label: <Link to={href(ROUTES.POSTS)}>Посты</Link>,
+    key: ROUTES.POSTS,
     icon: <ReadOutlined />,
   },
   {
-    label: "Пользователи",
-    link: ROUTES.USERS,
+    label: <Link to={href(ROUTES.USERS)}>Пользователи</Link>,
+    key: ROUTES.USERS,
     icon: <UserOutlined />,
   },
   {
-    label: "Альбомы",
-    link: ROUTES.ALBUMS,
+    label: <Link to={href(ROUTES.ALBUMS)}>Альбомы</Link>,
+    key: ROUTES.ALBUMS,
     icon: <PictureOutlined />,
   },
 ];
@@ -54,15 +56,7 @@ export const Navigation: FC<Props> = ({
       theme={theme}
       selectedKeys={[location.pathname]}
       onClick={onClick}
-    >
-      {menuItems.map((item) => (
-        <Item key={item.link}>
-          <Link to={href(item.link)}>
-            {item.icon}
-            <span>{item.label}</span>
-          </Link>
-        </Item>
-      ))}
-    </Menu>
+      items={menuItems}
+    />
   );
 };
