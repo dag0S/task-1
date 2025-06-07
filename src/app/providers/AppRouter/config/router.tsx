@@ -27,6 +27,10 @@ export const router = createBrowserRouter([
         path: ROUTES.ALBUMS,
         lazy: () => import("@/pages/AlbumsPage"),
       },
+      {
+        path: ROUTES.NOT_FOUND,
+        lazy: () => import("@/pages/NotFoundPage"),
+      },
     ],
   },
 ]);

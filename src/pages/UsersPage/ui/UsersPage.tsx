@@ -3,6 +3,9 @@ import { useEffect, useState, type ChangeEvent, type FC } from "react";
 import { UserList, useUserStore } from "@/entities/User";
 import { ViewSelector } from "@/features/ViewSelector";
 import { SearchInput } from "@/features/SearchInput";
+import { Typography } from "antd";
+
+const { Title } = Typography;
 
 export const UsersPage: FC = () => {
   const users = useUserStore((state) => state.users);
@@ -25,6 +28,7 @@ export const UsersPage: FC = () => {
 
   return (
     <div>
+      <Title level={2}>Пользователи</Title>
       <SearchInput
         value={search}
         onChange={handleSearch}

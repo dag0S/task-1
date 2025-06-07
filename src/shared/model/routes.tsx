@@ -6,6 +6,7 @@ export const ROUTES = {
   ALBUMS: "/albums",
   POSTS: "/posts",
   POST: "/posts/:postId",
+  NOT_FOUND: "*",
 } as const;
 
 export type PathParams = {
