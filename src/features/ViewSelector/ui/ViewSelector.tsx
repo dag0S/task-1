@@ -12,7 +12,6 @@ export const ViewSelector: FC = () => {
     <Radio.Group
       value={view}
       onChange={(e) => setView(e.target.value)}
-      style={{ marginBottom: "16px" }}
     >
       <Radio.Button value="cards" title="Карточки">
         <AppstoreOutlined />

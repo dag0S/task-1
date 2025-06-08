@@ -15,7 +15,6 @@ export const SearchInput: FC<Props> = ({ onChange, value, placeholder }) => {
       placeholder={placeholder}
       enterButton
       size="large"
-      style={{ marginBottom: "16px" }}
       onChange={onChange}
       value={value}
     />

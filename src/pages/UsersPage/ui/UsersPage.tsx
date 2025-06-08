@@ -1,5 +1,5 @@
 import { useEffect, useState, type ChangeEvent, type FC } from "react";
-import { Typography, type RadioChangeEvent } from "antd";
+import { Alert, Flex, Typography, type RadioChangeEvent } from "antd";
 
 import { UserList, UserTable, useUserStore } from "@/entities/User";
 import { useViewUsersStore, ViewSelector } from "@/features/ViewSelector";
@@ -28,23 +28,22 @@ export const UsersPage: FC = () => {
   }, [fetchUsers]);
 
   return (
-    <div>
-      <Title level={2}>Пользователи</Title>
+    <Flex vertical gap={16}>
+      <Title level={2} style={{ marginBottom: 0 }}>
+        Пользователи
+      </Title>
       <SearchInput
         value={search}
         onChange={handleSearch}
         placeholder="Поиск по имени"
       />
       <ViewSelector />
+      {error && <Alert type="error" message={error} />}
       {view === "cards" ? (
-        <UserList
-          filteredUsers={filteredUsers}
-          error={error}
-          isLoading={isLoading}
-        />
+        <UserList filteredUsers={filteredUsers} isLoading={isLoading} />
       ) : (
         <UserTable users={filteredUsers} isLoading={isLoading} />
       )}
-    </div>
+    </Flex>
   );
 };

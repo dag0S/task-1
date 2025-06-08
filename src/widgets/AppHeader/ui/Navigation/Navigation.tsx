@@ -10,8 +10,6 @@ import {
 
 import { ROUTES } from "@/shared/model/routes";
 
-const { Item } = Menu;
-
 type MenuItem = Required<MenuProps>["items"][number];
 
 const menuItems: MenuItem[] = [
