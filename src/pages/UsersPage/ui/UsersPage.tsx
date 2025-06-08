@@ -1,9 +1,9 @@
 import { useEffect, useState, type ChangeEvent, type FC } from "react";
+import { Typography, type RadioChangeEvent } from "antd";
 
-import { UserList, useUserStore } from "@/entities/User";
-import { ViewSelector } from "@/features/ViewSelector";
+import { UserList, UserTable, useUserStore } from "@/entities/User";
+import { useViewUsersStore, ViewSelector } from "@/features/ViewSelector";
 import { SearchInput } from "@/features/SearchInput";
-import { Typography } from "antd";
 
 const { Title } = Typography;
 
@@ -12,6 +12,7 @@ export const UsersPage: FC = () => {
   const isLoading = useUserStore((state) => state.isLoading);
   const error = useUserStore((state) => state.error);
   const fetchUsers = useUserStore((state) => state.fetchUsers);
+  const view = useViewUsersStore((state) => state.view);
 
   const [search, setSearch] = useState("");
 
@@ -35,11 +36,15 @@ export const UsersPage: FC = () => {
         placeholder="Поиск по имени"
       />
       <ViewSelector />
-      <UserList
-        filteredUsers={filteredUsers}
-        error={error}
-        isLoading={isLoading}
-      />
+      {view === "cards" ? (
+        <UserList
+          filteredUsers={filteredUsers}
+          error={error}
+          isLoading={isLoading}
+        />
+      ) : (
+        <UserTable users={filteredUsers} isLoading={isLoading} />
+      )}
     </div>
   );
 };
