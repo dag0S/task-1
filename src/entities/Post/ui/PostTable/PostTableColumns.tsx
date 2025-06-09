@@ -6,20 +6,17 @@ export const columns: ColumnsType<IPost> = [
   {
     title: "ID",
     dataIndex: "id",
-    width: 60,
+    key: "id",
   },
   {
     title: "Заголовок",
     dataIndex: "title",
-  },
-  {
-    title: "Текст",
-    dataIndex: "body",
+    key: "title",
     ellipsis: true,
   },
   {
     title: "Автор",
     dataIndex: "authorName",
-    width: 200,
+    key: "authorName",
   },
 ];

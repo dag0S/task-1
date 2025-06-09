@@ -9,7 +9,7 @@ export const columns: ColumnsType<IUser> = [
     key: "name",
   },
   {
-    title: "Юзернейм",
+    title: "Логин",
     dataIndex: "username",
     key: "username",
   },

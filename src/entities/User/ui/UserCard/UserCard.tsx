@@ -19,7 +19,7 @@ export const UserCard: FC<Props> = ({ user }) => {
       hoverable
     >
       <Descriptions column={1} size="small">
-        <Descriptions.Item label="Имя">{user.username}</Descriptions.Item>
+        <Descriptions.Item label="Логин">{user.username}</Descriptions.Item>
 
         <Descriptions.Item label="Почта">
           <a href={`mailto:${user.email}`}>{user.email}</a>

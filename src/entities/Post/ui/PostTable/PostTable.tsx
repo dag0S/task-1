@@ -1,10 +1,12 @@
 import type { FC } from "react";
-import { Table } from "antd";
+import { Table, Typography } from "antd";
+import { href, useNavigate } from "react-router-dom";
 
 import type { IPost } from "../../model/types";
 import { columns } from "./PostTableColumns";
 import { ROUTES } from "@/shared/model/routes";
-import { href, useNavigate } from "react-router-dom";
+
+const { Text } = Typography;
 
 interface Props {
   posts: IPost[];
@@ -27,10 +29,20 @@ export const PostTable: FC<Props> = ({
 
   return (
     <Table
-      columns={columns}
       dataSource={posts}
+      columns={columns}
       loading={isLoading}
       rowKey="id"
+      scroll={{ x: true }}
+      expandable={{
+        expandedRowRender: (post) => (
+          <div>
+            <Text strong>Содержание: </Text>
+            <Text>{post.body}</Text>
+          </div>
+        ),
+        rowExpandable: (post) => post.body !== "Не расширяемый",
+      }}
       pagination={{
         current: currentPage,
         pageSize,
