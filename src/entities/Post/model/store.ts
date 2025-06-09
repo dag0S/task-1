@@ -9,7 +9,11 @@ interface State {
   total: number;
   isLoading: boolean;
   error: string | null;
-  fetchPosts: (page: number, limit: number) => Promise<void>;
+  fetchPosts: (params: {
+    page: number;
+    limit: number;
+    searchValue?: string;
+  }) => Promise<void>;
 }
 
 export const usePostStore = create<State>((set) => ({
@@ -17,15 +21,19 @@ export const usePostStore = create<State>((set) => ({
   total: 0,
   isLoading: false,
   error: null,
-  fetchPosts: async (page, limit) => {
+  fetchPosts: async ({ page, limit, searchValue }) => {
     set({ isLoading: true, error: null });
 
     try {
+      const queryParams = new URLSearchParams({
+        _page: String(page),
+        _limit: String(limit),
+      });
+      if (searchValue) queryParams.append("q", searchValue);
+
       const [postsRes, usersRes] = await Promise.all([
-        $api.get<IPost[]>(
-          `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`
-        ),
-        $api.get<IUser[]>(`https://jsonplaceholder.typicode.com/users`),
+        $api.get<IPost[]>(`/posts?${queryParams.toString()}`),
+        $api.get<IUser[]>("/users"),
       ]);
 
       const users = usersRes.data;
