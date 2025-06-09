@@ -2,6 +2,9 @@ import type { FC } from "react";
 import { Table } from "antd";
 
 import type { IPost } from "../../model/types";
+import { columns } from "./PostTableColumns";
+import { ROUTES } from "@/shared/model/routes";
+import { href, useNavigate } from "react-router-dom";
 
 interface Props {
   posts: IPost[];
@@ -20,21 +23,7 @@ export const PostTable: FC<Props> = ({
   pageSize,
   onChange,
 }) => {
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      width: 60,
-    },
-    {
-      title: "Заголовок",
-      dataIndex: "title",
-    },
-    {
-      title: "Автор",
-      dataIndex: "authorName",
-    },
-  ];
+  const navigate = useNavigate();
 
   return (
     <Table
@@ -47,6 +36,14 @@ export const PostTable: FC<Props> = ({
         pageSize,
         total,
         onChange,
+        showSizeChanger: false,
+      }}
+      onRow={(post) => {
+        return {
+          onClick: () =>
+            navigate(`${href(ROUTES.POST, { postId: post.id.toString() })}`),
+          style: { cursor: "pointer" },
+        };
       }}
     />
   );

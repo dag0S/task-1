@@ -1,4 +1,5 @@
 import type { ColumnsType } from "antd/es/table";
+
 import type { IUser } from "../../model/types";
 
 export const columns: ColumnsType<IUser> = [
