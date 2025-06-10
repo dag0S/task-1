@@ -24,7 +24,7 @@ export const UserList: FC<Props> = ({ filteredUsers, isLoading }) => {
         xxl: 4,
       }}
       dataSource={isLoading ? skeletons : filteredUsers}
-      renderItem={(user, index) => (
+      renderItem={(user: IUser, index) => (
         <List.Item key={isLoading ? index : user.id}>
           {isLoading ? <UserCardSkeleton /> : <UserCard user={user} />}
         </List.Item>

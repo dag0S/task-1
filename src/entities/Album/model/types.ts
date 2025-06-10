@@ -11,5 +11,6 @@ export interface IAlbum {
   id: number;
   title: string;
   photos: IPhoto[];
-  author: IUser;
+  userId: number;
+  author?: IUser;
 }

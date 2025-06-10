@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState, type ChangeEvent, type FC } from "react";
-import { Alert, Card, Col, Flex, Image, Row, Spin, Typography } from "antd";
+import { useEffect, useState, type ChangeEvent, type FC } from "react";
+import { Alert, Flex, Spin, Typography } from "antd";
+import { useInView } from "react-intersection-observer";
 
 import { SearchInput } from "@/features/SearchInput";
-import { useAlbumStore } from "@/entities/Album/model/store";
 import { useDebounce } from "@/shared/hooks";
+import { AlbumList, useAlbumStore } from "@/entities/Album";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export const AlbumsPage: FC = () => {
   const albums = useAlbumStore((state) => state.albums);
@@ -14,7 +15,7 @@ export const AlbumsPage: FC = () => {
   const hasMore = useAlbumStore((state) => state.hasMore);
   const fetchMoreAlbums = useAlbumStore((state) => state.fetchMoreAlbums);
 
-  const loaderRef = useRef<HTMLDivElement | null>(null);
+  const { ref: loaderRef, inView } = useInView();
 
   const [searchValue, setSearchValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,37 +28,15 @@ export const AlbumsPage: FC = () => {
   };
 
   useEffect(() => {
-    fetchMoreAlbums({
-      limit: 5,
-      page: currentPage,
-      searchValue: debouncedSearchValue,
-    });
-  }, [fetchMoreAlbums, AlbumsPage]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoading) {
-          fetchMoreAlbums({
-            limit: 5,
-            page: currentPage,
-            searchValue: debouncedSearchValue,
-          });
-        }
-      },
-      { threshold: 1 }
-    );
-
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
+    if (inView && hasMore && !isLoading && !error) {
+      fetchMoreAlbums({
+        limit: 5,
+        page: currentPage,
+        searchValue: debouncedSearchValue,
+      });
+      setCurrentPage((prev) => prev + 1);
     }
-
-    return () => {
-      if (loaderRef.current) {
-        observer.disconnect();
-      }
-    };
-  }, [loaderRef.current, hasMore, isLoading]);
+  }, [inView, hasMore, isLoading, debouncedSearchValue, error]);
 
   return (
     <Flex vertical gap={16}>
@@ -70,36 +49,10 @@ export const AlbumsPage: FC = () => {
         placeholder="Поиск по тексту"
       />
       {error && <Alert type="error" message={error} />}
-      <Row gutter={[16, 16]}>
-        {albums.map((album) => (
-          <Col key={album.id} xs={24} sm={12} md={8} lg={6}>
-            <Card title={album.title} hoverable>
-              <Image.PreviewGroup>
-                {album.photos.map((photo) => (
-                  <Image
-                    key={photo.id}
-                    src={photo.thumbnailUrl.replace(
-                      "via.placeholder.com",
-                      "dummyimage.com"
-                    )}
-                    width={60}
-                    height={60}
-                    alt={photo.title}
-                    style={{
-                      marginRight: 8,
-                      marginBottom: 8,
-                      objectFit: "cover",
-                    }}
-                  />
-                ))}
-              </Image.PreviewGroup>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      <AlbumList albums={albums} />
       <div ref={loaderRef} style={{ textAlign: "center", padding: 24 }}>
         {isLoading && <Spin />}
-        {!hasMore && <p>Все альбомы загружены</p>}
+        {!hasMore && <Text strong>Все альбомы загружены</Text>}
       </div>
     </Flex>
   );
