@@ -1,9 +1,12 @@
 import { useEffect, type FC } from "react";
 import { href, Link, useParams } from "react-router-dom";
-import { Avatar, Breadcrumb, Card, Flex, Typography } from "antd";
+import { Alert, Avatar, Breadcrumb, Card, Flex, Typography } from "antd";
 
 import { ROUTES, type PathParams } from "@/shared/model/routes";
-import { usePostDetailsStore } from "@/entities/PostDetails";
+import {
+  PostDetailsSkeleton,
+  usePostDetailsStore,
+} from "@/entities/PostDetails";
 import { CommentList } from "@/entities/Comment";
 
 const { Title, Text } = Typography;
@@ -26,8 +29,8 @@ export const PostPage: FC = () => {
     }
   }, [postId, fetchPostDetails]);
 
-  if (isLoading) return <p>Загрузка...</p>;
-  if (error) return <p>{error}</p>;
+  if (isLoading) return <PostDetailsSkeleton />;
+  if (error) return <Alert type="error" message={error} />;
   if (!post || !author) return null;
 
   return (
@@ -49,7 +52,7 @@ export const PostPage: FC = () => {
             <Avatar>{author.name[0]}</Avatar>
             <div>
               <Title level={3} style={{ marginBottom: 0 }}>
-                {author.name}
+                {author.name} ({author.username})
               </Title>
               <Text type="secondary">Почта: </Text>
               <a href={`mailto:${author.email}`} target="_blank">
