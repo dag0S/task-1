@@ -1,54 +1,98 @@
-# React + TypeScript + Vite
+# TASK-1 SPA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Приложение для отображения и взаимодействия с данными из [JSONPlaceholder](https://jsonplaceholder.typicode.com/), реализованное с использованием современных технологий фронтенда. Пользователь может просматривать пользователей, посты, альбомы с фотографиями, а также осуществлять поиск и переключение тем.
 
-Currently, two official plugins are available:
+## 🔗 [Live Demo на GitHub Pages](https://dag0s.github.io/task-1)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## О проекте
 
-## Expanding the ESLint configuration
+Интерфейс для работы с типовыми сущностями (пользователи, посты, альбомы) с возможностью:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* Просмотра подробной информации
+* Поиска и фильтрации
+* Бесконечной прокрутки и пагинации
+* Адаптивности для мобильных устройств
+* Переключения между светлой и темной темами
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Используемые технологии
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+* **React + TypeScript**
+* **Vite** — сборка проекта
+* **Zustand** — глобальное хранилище
+* **Ant Design** — UI-компоненты
+* **React Router** — маршрутизация
+* **axios** — работа с API
+* **FSD (Feature-Sliced Design)** — архитектура
+* **React Intersection Observer** — бесконечная прокрутка
+* **GitHub Pages** — деплой
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+## Страницы приложения
+
+| Страница     | Описание                                                                |
+| ------------ | ----------------------------------------------------------------------- |
+| `/`          | Главная с описанием проекта и ссылками на остальные разделы             |
+| `/users`     | Список пользователей в виде карточек и таблицы                          |
+| `/posts`     | Посты с именем автора, поддержка пагинации и поиска                     |
+| `/albums`    | Альбомы с фотографиями, поиск и бесконечная прокрутка карточек альбомов |
+| `/posts/:id` | Детальная страница поста с автором и комментариями                      |
+| `*`          | Страница 404                                                            |
+
+---
+
+## Как запустить проект
+
+1. **Клонируйте репозиторий**
+
+   ```bash
+   git clone https://github.com/dag0S/task-1
+   cd task-1
+   ```
+
+2. **Установите зависимости**
+
+   ```bash
+   npm install
+   ```
+
+3. **Создайте `.env.development`**
+
+   ```env
+   VITE_API_BASE_URL=https://jsonplaceholder.typicode.com
+   ```
+
+4. **Запустите проект**
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Сборка проекта**
+
+   ```bash
+   npm run build
+   ```
+
+6. **Предпросмотр продакшн-сборки**
+
+   ```bash
+   npm run preview
+   ```
+
+---
+
+## Реализовано
+
+* [x] Структура проекта по FSD
+* [x] UI на базе Ant Design
+* [x] Адаптивная верстка
+* [x] Темизация (светлая / темная)
+* [x] Список пользователей с фильтрацией
+* [x] Карточки постов и таблица с пагинацией
+* [x] Страница одного поста с комментариями
+* [x] Альбомы с подгрузкой по скроллу
+* [x] Поиск с debounce
+* [x] Интеграция с GitHub Pages
