@@ -18,6 +18,7 @@ export const SearchInput: FC<Props> = memo(
         size="large"
         onChange={onChange}
         value={value}
+        allowClear
       />
     );
   }

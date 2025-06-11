@@ -1,5 +1,5 @@
-import { useEffect, useState, type ChangeEvent, type FC } from "react";
-import { Alert, Flex, Spin, Typography } from "antd";
+import { useEffect, useRef, useState, type ChangeEvent, type FC } from "react";
+import { Alert, Divider, Flex, Spin, Typography } from "antd";
 import { useInView } from "react-intersection-observer";
 
 import { SearchInput } from "@/features/SearchInput";
@@ -14,11 +14,13 @@ export const AlbumsPage: FC = () => {
   const error = useAlbumStore((state) => state.error);
   const hasMore = useAlbumStore((state) => state.hasMore);
   const fetchMoreAlbums = useAlbumStore((state) => state.fetchMoreAlbums);
+  const reset = useAlbumStore((state) => state.reset);
 
   const { ref: loaderRef, inView } = useInView();
 
   const [searchValue, setSearchValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const initialSearch = useRef(true);
 
   const debouncedSearchValue = useDebounce(searchValue, 1000);
 
@@ -28,15 +30,32 @@ export const AlbumsPage: FC = () => {
   };
 
   useEffect(() => {
-    if (inView && hasMore && !isLoading && !error) {
+    reset();
+    setCurrentPage(1);
+    fetchMoreAlbums({
+      page: 1,
+      limit: 5,
+      reset: true,
+      searchValue: debouncedSearchValue,
+    });
+  }, [debouncedSearchValue]);
+
+  useEffect(() => {
+    if (initialSearch.current) {
+      initialSearch.current = false;
+      return;
+    }
+
+    if (inView && hasMore && !isLoading) {
+      const nextPage = currentPage + 1;
       fetchMoreAlbums({
+        page: nextPage,
         limit: 5,
-        page: currentPage,
         searchValue: debouncedSearchValue,
       });
-      setCurrentPage((prev) => prev + 1);
+      setCurrentPage(nextPage);
     }
-  }, [inView, hasMore, isLoading, debouncedSearchValue, error]);
+  }, [inView]);
 
   return (
     <Flex vertical gap={16}>
@@ -46,8 +65,9 @@ export const AlbumsPage: FC = () => {
       <SearchInput
         value={searchValue}
         onChange={handleSearch}
-        placeholder="Поиск по тексту"
+        placeholder="Поиск по названию"
       />
+      <Divider style={{ margin: 0 }} />
       {error && <Alert type="error" message={error} />}
       <AlbumList albums={albums} />
       <div ref={loaderRef} style={{ textAlign: "center", padding: 24 }}>

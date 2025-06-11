@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import { Grid, Layout } from "antd";
 
 import { AppHeader } from "@/widgets/AppHeader";
@@ -15,6 +15,7 @@ export const MainLayout = () => {
       <Content style={{ padding: screen.lg ? "20px 50px" : "16px" }}>
         <Outlet />
       </Content>
+      <ScrollRestoration />
     </Layout>
   );
 };

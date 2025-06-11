@@ -1,11 +1,11 @@
 import { useEffect, useState, type ChangeEvent, type FC } from "react";
-import { Alert, Flex, Typography } from "antd";
+import { Alert, Divider, Flex, Typography } from "antd";
 
 import { UserList, UserTable, useUserStore } from "@/entities/User";
 import { useViewUsersStore, ViewSelector } from "@/features/ViewSelector";
 import { SearchInput } from "@/features/SearchInput";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export const UsersPage: FC = () => {
   const users = useUserStore((state) => state.users);
@@ -37,7 +37,11 @@ export const UsersPage: FC = () => {
         onChange={handleSearch}
         placeholder="Поиск по имени"
       />
-      <ViewSelector />
+      <Divider style={{ margin: 0 }} />
+      <Flex gap={16} align="center" justify="flex-end">
+        <Text strong>Вид отображения:</Text>
+        <ViewSelector />
+      </Flex>
       {error && <Alert type="error" message={error} />}
       {view === "cards" ? (
         <UserList filteredUsers={filteredUsers} isLoading={isLoading} />

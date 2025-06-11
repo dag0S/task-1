@@ -2,6 +2,7 @@ import { memo, type FC } from "react";
 import { Avatar, Card, Flex, Image, Typography } from "antd";
 
 import type { IAlbum } from "../../model/types";
+import { useThemeStore } from "@/features/ThemeSwitcher";
 
 const { Title, Text } = Typography;
 
@@ -10,11 +11,16 @@ interface Props {
 }
 
 export const AlbumCard: FC<Props> = memo(({ album }) => {
+  const { theme } = useThemeStore();
+
   return (
     <Card
+      styles={{ header: { padding: 24 } }}
       title={
         <>
-          <Title level={3}>{album.title}</Title>
+          <Title level={3} ellipsis title={album.title}>
+            {album.title}
+          </Title>
           <Flex gap={10}>
             <Avatar>{album.author?.name[0]}</Avatar>
             <div>
@@ -31,7 +37,7 @@ export const AlbumCard: FC<Props> = memo(({ album }) => {
       }
       hoverable
     >
-      <Image.PreviewGroup>
+      <Image.PreviewGroup key={theme}>
         {album.photos.map((photo) => (
           <Image
             key={photo.id}
@@ -41,6 +47,7 @@ export const AlbumCard: FC<Props> = memo(({ album }) => {
             )}
             width={60}
             height={60}
+            fallback="/img-placeholder.png"
             alt={photo.title}
           />
         ))}

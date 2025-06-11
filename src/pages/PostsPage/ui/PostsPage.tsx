@@ -1,5 +1,5 @@
 import { useEffect, useState, type ChangeEvent, type FC } from "react";
-import { Alert, Flex, Typography } from "antd";
+import { Alert, Divider, Flex, Typography } from "antd";
 
 import { SearchInput } from "@/features/SearchInput";
 import { PostTable, usePostStore } from "@/entities/Post";
@@ -48,6 +48,7 @@ export const PostsPage: FC = () => {
         onChange={handleSearch}
         placeholder="Поиск по тексту"
       />
+      <Divider style={{ margin: 0 }} />
       {error && <Alert type="error" message={error} />}
       <PostTable
         currentPage={currentPage}

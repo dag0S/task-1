@@ -14,7 +14,9 @@ interface State {
     page: number;
     limit: number;
     searchValue?: string;
+    reset?: boolean;
   }) => Promise<void>;
+  reset: () => void;
 }
 
 export const useAlbumStore = create<State>((set, get) => ({
@@ -24,7 +26,7 @@ export const useAlbumStore = create<State>((set, get) => ({
   error: null,
   hasMore: true,
 
-  fetchMoreAlbums: async ({ page, limit, searchValue }) => {
+  fetchMoreAlbums: async ({ page, limit, searchValue, reset = false }) => {
     const { albums, hasMore, isLoading } = get();
 
     if (isLoading || !hasMore) return;
@@ -62,7 +64,7 @@ export const useAlbumStore = create<State>((set, get) => ({
       );
 
       set({
-        albums: [...albums, ...albumsWithPhotos],
+        albums: reset ? albumsWithPhotos : [...albums, ...albumsWithPhotos],
         hasMore: newAlbumsWithAuthors.length > 0,
         isLoading: false,
         error: null,
@@ -74,4 +76,5 @@ export const useAlbumStore = create<State>((set, get) => ({
       });
     }
   },
+  reset: () => set({ albums: [], hasMore: true }),
 }));
