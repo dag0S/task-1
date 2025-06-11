@@ -64,19 +64,21 @@
    VITE_API_BASE_URL=https://jsonplaceholder.typicode.com
    ```
 
-4. **Запустите проект**
+4. **Заменить `/task-1/` на `/` в `vite.config`, `router.tsx`, `AlbumsCard.tsx` (`/task-1/` нужно только для деплоя на Github Pages)**
+
+5. **Запустите проект**
 
    ```bash
    npm run dev
    ```
 
-5. **Сборка проекта**
+6. **Сборка проекта**
 
    ```bash
    npm run build
    ```
 
-6. **Предпросмотр продакшн-сборки**
+7. **Предпросмотр продакшн-сборки**
 
    ```bash
    npm run preview
