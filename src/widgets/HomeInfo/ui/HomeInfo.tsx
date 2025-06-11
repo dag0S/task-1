@@ -43,7 +43,7 @@ export const HomeInfo: FC = () => {
         </Paragraph>
         <Paragraph>
           Реализованы: клиентская фильтрация, пагинация, адаптивная верстка,
-          управление состоянием и асинхронными запросами.
+          смена темы, управление состоянием и асинхронными запросами.
         </Paragraph>
         <Paragraph>Используемые технологии:</Paragraph>
         <ul>
@@ -68,6 +68,9 @@ export const HomeInfo: FC = () => {
           <li>
             <Text strong>Vite</Text> — сборка проекта
           </li>
+          <li>
+            <Text strong>FSD</Text> — архитектура
+          </li>
         </ul>
       </Typography>
       <Title level={3} style={{ marginTop: 32 }}>
@@ -78,7 +81,7 @@ export const HomeInfo: FC = () => {
           <Col xs={24} sm={12} md={8} key={page.link}>
             <Card
               title={page.title}
-              extra={[<Link to={href(page.link)}>Перейти</Link>]}
+              extra={<Link to={href(page.link)}>Перейти</Link>}
             >
               <Paragraph>{page.description}</Paragraph>
             </Card>

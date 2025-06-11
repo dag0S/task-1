@@ -3,6 +3,7 @@ import { Button, Flex, Grid, Layout } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 
 import { AppDrawer } from "@/shared/ui";
+import { ThemeSwitcher } from "@/features/ThemeSwitcher";
 import { Navigation } from "../Navigation/Navigation";
 import { Logo } from "../Logo/Logo";
 
@@ -27,17 +28,24 @@ export const AppHeader: FC = () => {
     >
       <Flex align="center" justify="space-between" style={{ height: "100%" }}>
         <Logo />
-        {screen.md && <Navigation theme="dark" />}
-        {!screen.md && (
-          <>
-            <Button type="primary" onClick={() => setOpen(true)}>
-              <MenuOutlined />
-            </Button>
-            <AppDrawer title="Меню" onClose={handleClose} open={open}>
-              <Navigation mode="vertical" onClick={handleClose} />
-            </AppDrawer>
-          </>
-        )}
+        <Flex gap={16} align="center">
+          <ThemeSwitcher />
+          {screen.md && <Navigation theme="dark" />}
+          {!screen.md && (
+            <>
+              <Button
+                type="primary"
+                shape="circle"
+                onClick={() => setOpen(true)}
+              >
+                <MenuOutlined />
+              </Button>
+              <AppDrawer title="Меню" onClose={handleClose} open={open}>
+                <Navigation mode="vertical" onClick={handleClose} />
+              </AppDrawer>
+            </>
+          )}
+        </Flex>
       </Flex>
     </Header>
   );

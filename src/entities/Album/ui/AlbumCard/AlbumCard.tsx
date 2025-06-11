@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { memo, type FC } from "react";
 import { Avatar, Card, Flex, Image, Typography } from "antd";
 
 import type { IAlbum } from "../../model/types";
@@ -9,13 +9,13 @@ interface Props {
   album: IAlbum;
 }
 
-export const AlbumCard: FC<Props> = ({ album }) => {
+export const AlbumCard: FC<Props> = memo(({ album }) => {
   return (
     <Card
       title={
         <>
           <Title level={3}>{album.title}</Title>
-          <Flex gap={16}>
+          <Flex gap={10}>
             <Avatar>{album.author?.name[0]}</Avatar>
             <div>
               <Title level={5} style={{ marginBottom: 0 }}>
@@ -47,4 +47,4 @@ export const AlbumCard: FC<Props> = ({ album }) => {
       </Image.PreviewGroup>
     </Card>
   );
-};
+});

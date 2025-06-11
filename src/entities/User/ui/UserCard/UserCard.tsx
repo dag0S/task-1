@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { memo, type FC } from "react";
 import { Avatar, Card, Descriptions } from "antd";
 
 import type { IUser } from "../../model/types";
@@ -7,11 +7,11 @@ interface Props {
   user: IUser;
 }
 
-export const UserCard: FC<Props> = ({ user }) => {
+export const UserCard: FC<Props> = memo(({ user }) => {
   return (
     <Card
       title={
-        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
           <Avatar>{user.name[0]}</Avatar>
           <span>{user.name}</span>
         </div>
@@ -49,4 +49,4 @@ export const UserCard: FC<Props> = ({ user }) => {
       </Descriptions>
     </Card>
   );
-};
+});

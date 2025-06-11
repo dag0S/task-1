@@ -10,11 +10,11 @@ export const MainLayout = () => {
   const screen = useBreakpoint();
 
   return (
-    <div>
+    <Layout style={{ minHeight: "100vh" }}>
       <AppHeader />
       <Content style={{ padding: screen.lg ? "20px 50px" : "16px" }}>
         <Outlet />
       </Content>
-    </div>
+    </Layout>
   );
 };
