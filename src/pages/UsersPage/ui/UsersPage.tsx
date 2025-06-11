@@ -1,5 +1,5 @@
 import { useEffect, useState, type ChangeEvent, type FC } from "react";
-import { Alert, Flex, Typography, type RadioChangeEvent } from "antd";
+import { Alert, Flex, Typography } from "antd";
 
 import { UserList, UserTable, useUserStore } from "@/entities/User";
 import { useViewUsersStore, ViewSelector } from "@/features/ViewSelector";

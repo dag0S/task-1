@@ -17,7 +17,6 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
           theme === "dark"
             ? antdTheme.darkAlgorithm
             : antdTheme.defaultAlgorithm,
-
         token: {
           colorPrimary: "#ff5400",
           colorInfo: "#ff5400",
