@@ -48,7 +48,6 @@ export const AlbumsPage: FC = () => {
       }
     };
 
-    // Пытаемся подгрузить сразу после первой загрузки
     if (albums.length > 0) {
       tryLoadMoreIfViewportNotFilled();
     }
