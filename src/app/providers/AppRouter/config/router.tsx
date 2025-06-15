@@ -35,5 +35,5 @@ export const router = createBrowserRouter(
       ],
     },
   ],
-  // { basename: "/task-1/" }
+  { basename: "/task-1/" }
 );

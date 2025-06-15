@@ -8,6 +8,8 @@ import { AlbumList, useAlbumStore } from "@/entities/Album";
 
 const { Title, Text } = Typography;
 
+const LIMIT = 6;
+
 export const AlbumsPage: FC = () => {
   const albums = useAlbumStore((state) => state.albums);
   const isLoading = useAlbumStore((state) => state.isLoading);
@@ -30,11 +32,34 @@ export const AlbumsPage: FC = () => {
   };
 
   useEffect(() => {
+    const tryLoadMoreIfViewportNotFilled = () => {
+      if (
+        document.documentElement.scrollHeight <= window.innerHeight &&
+        hasMore &&
+        !isLoading
+      ) {
+        const nextPage = currentPage + 1;
+        fetchMoreAlbums({
+          page: nextPage,
+          limit: LIMIT,
+          searchValue: debouncedSearchValue,
+        });
+        setCurrentPage(nextPage);
+      }
+    };
+
+    // Пытаемся подгрузить сразу после первой загрузки
+    if (albums.length > 0) {
+      tryLoadMoreIfViewportNotFilled();
+    }
+  }, [albums, hasMore, isLoading]);
+
+  useEffect(() => {
     reset();
     setCurrentPage(1);
     fetchMoreAlbums({
       page: 1,
-      limit: 5,
+      limit: LIMIT,
       reset: true,
       searchValue: debouncedSearchValue,
     });
@@ -50,12 +75,12 @@ export const AlbumsPage: FC = () => {
       const nextPage = currentPage + 1;
       fetchMoreAlbums({
         page: nextPage,
-        limit: 5,
+        limit: LIMIT,
         searchValue: debouncedSearchValue,
       });
       setCurrentPage(nextPage);
     }
-  }, [inView]);
+  }, [inView, hasMore, isLoading, currentPage]);
 
   return (
     <Flex vertical gap={16}>

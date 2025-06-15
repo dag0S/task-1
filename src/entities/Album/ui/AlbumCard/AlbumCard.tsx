@@ -47,7 +47,8 @@ export const AlbumCard: FC<Props> = memo(({ album }) => {
             )}
             width={60}
             height={60}
-            fallback="/img-placeholder.png"
+            // fallback="/img-placeholder.png"
+            fallback="/task-1/img-placeholder.png"
             alt={photo.title}
           />
         ))}

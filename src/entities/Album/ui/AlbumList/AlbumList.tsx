@@ -11,11 +11,12 @@ interface Props {
 export const AlbumList: FC<Props> = ({ albums }) => {
   return (
     <Row gutter={[16, 16]}>
-      {albums.map((album) => (
-        <Col key={album.id} xs={24} sm={24} md={12} lg={8}>
-          <AlbumCard album={album} />
-        </Col>
-      ))}
+      {albums.length > 0 &&
+        albums.map((album) => (
+          <Col key={album.id} xs={24} sm={24} md={12} lg={8}>
+            <AlbumCard album={album} />
+          </Col>
+        ))}
     </Row>
   );
 };
