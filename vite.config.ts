@@ -4,7 +4,7 @@ import viteTsconfigPaths from "vite-tsconfig-paths";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/task-1",
+  // base: "/task-1",
   plugins: [react(), viteTsconfigPaths()],
   css: {
     preprocessorOptions: {

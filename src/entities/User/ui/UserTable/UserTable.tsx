@@ -5,7 +5,7 @@ import type { IUser } from "../../model/types";
 import { columns } from "./UserTableColumns";
 
 interface Props {
-  users: IUser[];
+  users?: IUser[];
   isLoading: boolean;
 }
 

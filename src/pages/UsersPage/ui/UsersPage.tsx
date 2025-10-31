@@ -1,31 +1,33 @@
-import { useEffect, useState, type ChangeEvent, type FC } from "react";
+import { useState, type ChangeEvent, type FC } from "react";
 import { Alert, Divider, Flex, Typography } from "antd";
+import { useQuery } from "@tanstack/react-query";
 
-import { UserList, UserTable, useUserStore } from "@/entities/User";
+import { fetchUsers, UserList, UserTable } from "@/entities/User";
 import { useViewUsersStore, ViewSelector } from "@/features/ViewSelector";
 import { SearchInput } from "@/features/SearchInput";
 
 const { Title, Text } = Typography;
 
 export const UsersPage: FC = () => {
-  const users = useUserStore((state) => state.users);
-  const isLoading = useUserStore((state) => state.isLoading);
-  const error = useUserStore((state) => state.error);
-  const fetchUsers = useUserStore((state) => state.fetchUsers);
   const view = useViewUsersStore((state) => state.view);
+
+  const {
+    data: users,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+  });
 
   const [search, setSearch] = useState("");
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) =>
     setSearch(e.target.value);
 
-  const filteredUsers = users.filter((user) =>
+  const filteredUsers = users?.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
   );
-
-  useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
 
   return (
     <Flex vertical gap={16}>
@@ -42,7 +44,7 @@ export const UsersPage: FC = () => {
         <Text strong>Вид отображения:</Text>
         <ViewSelector />
       </Flex>
-      {error && <Alert type="error" message={error} />}
+      {error && <Alert type="error" message={error.message} />}
       {view === "cards" ? (
         <UserList filteredUsers={filteredUsers} isLoading={isLoading} />
       ) : (

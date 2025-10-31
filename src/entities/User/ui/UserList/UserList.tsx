@@ -6,7 +6,7 @@ import { UserCard } from "../UserCard/UserCard";
 import { UserCardSkeleton } from "../UserCard/UserCardSkeleton";
 
 interface Props {
-  filteredUsers: IUser[];
+  filteredUsers?: IUser[];
   isLoading: boolean;
 }
 
